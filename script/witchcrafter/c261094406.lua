@@ -44,7 +44,8 @@ function s.repcfilter(c)
 	return c:IsSetCard(0x128) and c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost()
 end
 function s.repcon(e)
-  -- e is the card that activates the effect.
+  -- e is this replacement effect.
+	Debug.Message(e:GetHandler():GetCode())
 	return Duel.IsExistingMatchingCard(s.repcfilter,e:GetHandlerPlayer(),LOCATION_DECK,0,1,nil)
 end
 function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
@@ -52,7 +53,7 @@ function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
   -- e = the card that activates the effect to discard.
   -- base has to be different from e because the replace only works for "another WC monster".
 	local c=e:GetHandler()
-	return c:IsControler(tp) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x128) and c ~= base
+	return c:IsControler(tp) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x128) and not c:GetCode() ~= base:GetCode()
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
   -- base = the card that has the replace effect.
