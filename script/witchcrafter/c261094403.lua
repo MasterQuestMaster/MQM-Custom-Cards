@@ -8,6 +8,8 @@ function s.initial_effect(c)
   Fusion.AddSpellTrapRep(c)
   c:SetSPSummonOnce(id)
 
+  -- TODO: test reviving with copying Holiday because it just did nothing that one duel.
+
   -- Copy a Witchcrafter Spell effect
   local e1=Effect.CreateEffect(c)
   e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -80,7 +82,11 @@ function s.copyop(e,tp,eg,ep,ev,re,r,rp)
 	if not te then return end
 	local tg=te:GetTarget()
 	local op=te:GetOperation()
-	if tg then tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,1) end
+  if tg then
+    -- clear current target (the spell) so that GetFirstTarget of the spell's tg function works correctly.
+    Duel.ClearTargetCard()
+    tg(te,tp,Group.CreateGroup(),PLAYER_NONE,0,e,REASON_EFFECT,PLAYER_NONE,1)
+  end
 	Duel.BreakEffect()
 	tc:CreateEffectRelation(te)
 	Duel.BreakEffect()

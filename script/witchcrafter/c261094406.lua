@@ -48,13 +48,13 @@ function s.repcon(e)
 	return Duel.IsExistingMatchingCard(s.repcfilter,e:GetHandlerPlayer(),LOCATION_DECK,0,1,nil)
 end
 function s.repval(base,e,tp,eg,ep,ev,re,r,rp,chk)
-  -- base = the card that has the replace effect.
+  -- base = the card that has the replace effect's code (Bystreet for WC Replace).
   -- e = the card that activates the effect to discard.
 	local c=e:GetHandler()
-	return c:IsControler(tp) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x128) and not c:IsCode(base:GetCode())
+	return c:IsControler(tp) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x128) and not c:IsCode(id)
 end
 function s.repop(base,e,tp,eg,ep,ev,re,r,rp)
-  -- base = the card that has the replace effect.
+  -- base = the card that has the replace effect's code (Bystreet for WC Replace).
   -- e = the card that activates the effect to discard.
 	Duel.Hint(HINT_CARD,0,id)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
